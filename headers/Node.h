@@ -7,7 +7,7 @@ class Node
 {
 public:
     void update(float deltaTime, SDL_Event* event);
-    void draw(SDL_Window* window);
+    void draw(SDL_Renderer* renderer);
 };
 
 #endif

@@ -32,6 +32,8 @@ int main()
         return -1;
     }
 
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+
     Application* app = new Application();
 
     auto lastRunAt = std::chrono::high_resolution_clock::now();
@@ -43,12 +45,16 @@ int main()
         lastRunAt = now;
 
         app->update(deltaTime);
-        app->draw(window);
 
-        SDL_UpdateWindowSurface(window);
+        SDL_RenderClear(renderer);
+        app->draw(renderer);
+        SDL_RenderPresent(renderer);
     }
 
     delete app;
+
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
 
     return 0;
 }
