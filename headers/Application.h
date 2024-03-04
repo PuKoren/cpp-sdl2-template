@@ -9,7 +9,7 @@ public:
     Application();
     bool isRunning();
     void update(float deltaTime);
-    void draw(SDL_Renderer* renderer);
+    void draw();
 private:
     bool running;
 };

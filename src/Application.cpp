@@ -22,13 +22,12 @@ void Application::update(float delta)
                 running = false;
             }
         }
-        else if (event.type == SDL_QUIT)
-        {
+        else if (event.type == SDL_QUIT) {
             running = false;
         }
     }
 }
 
-void Application::draw(SDL_Renderer *renderer)
+void Application::draw()
 {
 }

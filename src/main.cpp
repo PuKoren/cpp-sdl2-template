@@ -1,38 +1,17 @@
-#include <SDL2/SDL.h>
-#include <iostream>
 #include <chrono>
+#include <iostream>
 
+#include "Display.h"
 #include "Application.h"
 
 int main()
 {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0)
-    {
-        std::cout << "Failed to initialize the SDL2 library\n";
-        return -1;
+    Display* display = new Display();
+
+    if (!display->isReady()) {
+        std::cout << "Something went wrong initializing display, exiting\n";
+        return 1;
     }
-
-    SDL_Window *window = SDL_CreateWindow("SDL2 Template",
-                                          SDL_WINDOWPOS_CENTERED,
-                                          SDL_WINDOWPOS_CENTERED,
-                                          680, 480,
-                                          0);
-
-    if (!window)
-    {
-        std::cout << "Failed to create window\n";
-        return -1;
-    }
-
-    SDL_Surface *window_surface = SDL_GetWindowSurface(window);
-
-    if (!window_surface)
-    {
-        std::cout << "Failed to get the surface from the window\n";
-        return -1;
-    }
-
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
     Application* app = new Application();
 
@@ -45,16 +24,11 @@ int main()
         lastRunAt = now;
 
         app->update(deltaTime);
-
-        SDL_RenderClear(renderer);
-        app->draw(renderer);
-        SDL_RenderPresent(renderer);
+        app->draw();
     }
 
     delete app;
-
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
+    delete display;
 
     return 0;
 }
